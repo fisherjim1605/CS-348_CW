@@ -44,7 +44,24 @@
         <div class="card">
             <div class="card-header">Comments on <b>{{$post->title}}</b></div>
             <div class="card-body">
-                @foreach ($comments as $comment)                
+                <div class="container">      
+                    @auth
+                    <div class="card">
+                        <div class="card-body">
+                            <p>Post New Comment</p>    
+                                <form method="POST" action="{{ route('comments.store') }}">
+                                    @csrf
+                                    <p><input type="hidden" name="post_id" value="{{ $post->id }}" ></p>
+                                    <p>Message: <input type="text" name="message"
+                                        value="{{ old('message') }}"></p>
+                                    <input type="submit" value="Post Comment">
+                                </form> 
+                            </div>
+                        </div>
+                    @endauth
+                </div>
+                <br>
+                @forelse($comments as $comment)                
                     <div class="container">
                         <div class="card">
                             <div class="card-header">
@@ -56,22 +73,11 @@
                             </div>
                         </div>
                     </div>
-                @endforeach
-            </div>      
-            <div class="container">      
-                @auth
-                    <p>Post New Comment</p>    
-                        <form method="POST" action="{{ route('comments.store') }}">
-                            @csrf
-                            <p>Post ID: {{ $post->id }} <input type="hidden" name="post_id"
-                                value="{{ $post->id }}" ></p>
-                            <p>Message: <input type="text" name="message"
-                                value="{{ old('message') }}"></p>
-                            <input type="submit" value="Post Comment">
-                        </form> 
-                @endauth
-                <br>
-            </div>
+                @empty
+                    <p>No comments found</p>
+                @endforelse
+            </div>                  
         </div>
+        <p><a href="{{ route('posts.index') }}">Back</a></p>
     </div>
 @endsection
