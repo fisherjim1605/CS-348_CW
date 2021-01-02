@@ -33,7 +33,6 @@ class PostsController extends Controller
     public function create()
     {
         $users = User::orderBy('name', 'asc')->get();
-        $users->withPath('/posts');
         return view('posts.create', ['users' => $users]);
     }
 
