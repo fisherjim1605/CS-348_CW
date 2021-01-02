@@ -9,6 +9,7 @@ use App\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PostsController extends Controller
 {
@@ -19,8 +20,9 @@ class PostsController extends Controller
      */
     public function index()
     {
+
         $posts = Post::orderBy('uploadTime', 'desc')->get();;
-        return view('posts.index', ['posts' => $posts]);
+        return view('posts.index', ['posts' => DB::table('posts')->simplePaginate(10)]);
     }
 
     /**
@@ -31,6 +33,7 @@ class PostsController extends Controller
     public function create()
     {
         $users = User::orderBy('name', 'asc')->get();
+        $users->withPath('/posts');
         return view('posts.create', ['users' => $users]);
     }
 
@@ -56,12 +59,8 @@ class PostsController extends Controller
         if($validatedData['image_url'] != null) {
             $i = new Image;
             $i->url = $validatedData['image_url'];
-        } else {
-            $i = new Image;
-            $i->url = null;
-        }
-        $p->image()->save($i);
-
+            $p->image()->save($i);
+        } 
         session()->flash('message', 'Post uploaded');
         return redirect()->route('posts.index');
     }
@@ -110,6 +109,9 @@ class PostsController extends Controller
     public function destroy($id)
     {
         $post = Post::findOrFail($id);
+        foreach($post->comments as $comment) {
+            $comment->delete();
+        }
         $post->delete();
 
         return redirect()->route('posts.index')->with('message', 'Post successfully deleted');
