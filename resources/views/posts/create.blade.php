@@ -9,6 +9,8 @@
         @csrf
         <p>Title: <input type="text" name="title"
             value="{{ old('title') }}"></p>
+        <p>Image URL (Optional): <input type="text" name="image_url"
+            value="{{ old('image_url') }}"></p>
         <p>Content: <input type="text" name="content"
             value="{{ old('content') }}"></p>
         <input type="submit" value="Create Post">

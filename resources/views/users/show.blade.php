@@ -3,7 +3,7 @@
 @section('title', 'Not a Facebook Rip-off')
 
 @section('content')
-    <p>Users List</p>
+    <p>User Info</p>
     <ul>
         <li>User ID: {{ $user->id }}</li>
         <li>Name: {{ $user->name }} </li>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DateTime;
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
@@ -43,7 +44,8 @@ class PostsController extends Controller
     {
         $validatedData = $request->validate([
             'title' => 'required|max:255',
-            'content' => 'required|max:255',         
+            'content' => 'required|max:255',
+            'image_url' => 'nullable',         
         ]);
         $p = new Post;
         $p->title = $validatedData['title'];
@@ -51,6 +53,14 @@ class PostsController extends Controller
         $p->user_id = Auth::id();
         $p->uploadTime = new DateTime();
         $p->save();
+        if($validatedData['image_url'] != null) {
+            $i = new Image;
+            $i->url = $validatedData['image_url'];
+        } else {
+            $i = new Image;
+            $i->url = null;
+        }
+        $p->image()->save($i);
 
         session()->flash('message', 'Post uploaded');
         return redirect()->route('posts.index');

@@ -19,5 +19,10 @@ class Comment extends Model
     {
         return $this->belongsTo(Post::class);
     }
+
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
     
 }
