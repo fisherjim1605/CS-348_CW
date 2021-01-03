@@ -14,8 +14,7 @@
             <div class="card-body">
                 <p><b>User ID:</b> {{ $user->id }}</p>
                 <p><b>Email:</b> {{ $user->email }} </p>
-            </div>
-            
+            </div>                    
         </div>
         <div class="card">
             <div class="card-header">Posts by {{ $user->name }}</div>

@@ -18,8 +18,8 @@ class UserTableSeeder extends Seeder
     {
         $user = new User;
         $user->name = 'James';
-        $user->email = 'fakeemail@thisadress.com';
-        $user->password = "1234";
+        $user->email = 'fakeemail@thisaddress.com';
+        $user->password = "12345678";
         $user->email_verified_at = new DateTime();
         $user->save();
 
