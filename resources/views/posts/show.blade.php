@@ -28,6 +28,7 @@
             <div class="container">
                 @auth
                     @if(Auth::id() == $post->user->id)
+                        <p><b><a href="{{ route('posts.edit', ['id' => $post->id]) }}">Edit Post</a></b></p>
                         <form method="POST" action="{{ route('posts.destroy', ['id' => $post->id]) }}">
                             @csrf
                             @method('DELETE')

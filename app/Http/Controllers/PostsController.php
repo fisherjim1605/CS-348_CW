@@ -84,7 +84,8 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        return view('posts.edit', ['post' => $post]);
     }
 
     /**
@@ -96,7 +97,25 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+            'content' => 'required|max:255',
+            'image_url' => 'nullable',         
+        ]);
+        $p = Post::findOrFail($id);
+        $p->title = $validatedData['title'];
+        $p->info = $validatedData['content'];
+        $p->uploadTime = new DateTime();
+        $p->save();
+        if($validatedData['image_url'] != null) {
+            $i = new Image;
+            $i->url = $validatedData['image_url'];
+            $p->image()->save($i);
+        } else {
+            $p->image()->delete();
+        }
+        session()->flash('message', 'Post updated');
+        return redirect()->route('posts.show', ['id' => $p->id]);
     }
 
     /**
