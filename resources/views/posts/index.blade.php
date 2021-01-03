@@ -3,6 +3,18 @@
 @section('title', 'Not a Facebook Rip-off')
 
 @section('content')
+    @if(session('message'))
+        <div class="container">
+            <div class="card">     
+                <div class="card-header">System Message</div>
+                <div class="card-body"> 
+                    <p>{{ session('message') }}</p>
+                </div>
+            </div>
+        </div>
+        <br>
+    @endif
+
     <div class="container">
         <div class="card">
             <div class="card-header">Posts Feed</div>

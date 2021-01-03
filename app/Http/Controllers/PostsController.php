@@ -20,9 +20,8 @@ class PostsController extends Controller
      */
     public function index()
     {
-
-        $posts = Post::orderBy('uploadTime', 'desc')->get();;
-        return view('posts.index', ['posts' => DB::table('posts')->simplePaginate(10)]);
+        $posts = Post::get();
+        return view('posts.index', ['posts' => DB::table('posts')->orderBy('uploadTime', 'desc')->simplePaginate(10)]);
     }
 
     /**
@@ -32,8 +31,7 @@ class PostsController extends Controller
      */
     public function create()
     {
-        $users = User::orderBy('name', 'asc')->get();
-        return view('posts.create', ['users' => $users]);
+        return view('posts.create');
     }
 
     /**
