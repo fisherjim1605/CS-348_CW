@@ -54,6 +54,8 @@
                                     <p><input type="hidden" name="post_id" value="{{ $post->id }}" ></p>
                                     <p>Message: <input type="text" name="message"
                                         value="{{ old('message') }}"></p>
+                                    <p>Image URL (Optional): <input type="text" name="image_url"
+                                        value="{{ old('image_url') }}"></p>
                                     <input type="submit" value="Post Comment">
                                 </form> 
                             </div>
@@ -61,7 +63,16 @@
                     @endauth
                 </div>
                 <br>
-                @forelse($comments as $comment)                
+                @forelse($comments as $comment)
+                    @php
+                        try {
+                            if($comment->image->url != null) {
+                                $commentHasImage = true;
+                            }
+                        } catch(Exception $e) {
+                            $commentHasImage = false;
+                        }
+                    @endphp                
                     <div class="container">
                         <div class="card">
                             <div class="card-header">
@@ -69,6 +80,9 @@
                             </div>
                             <div class="card-body">
                                 <p>{{ $comment->message }}</p>
+                                @if($commentHasImage == true)
+                                    <p><img src="{{ $comment->image->url }}"></p>
+                                @endif
                                 <p><i>Commented at {{ $comment->uploadTime}}</i></p>
                             </div>
                         </div>

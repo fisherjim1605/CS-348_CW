@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DateTime;
 use App\Models\Comment;
 use App\Models\Post;
+use App\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -42,7 +43,8 @@ class CommentController extends Controller
     {
         $validatedData = $request->validate([
             'message' => 'required|max:255',
-            'post_id' => 'required|integer',        
+            'post_id' => 'required|integer',
+            'image_url' => 'nullable',      
         ]);
         $c = new Comment;
         $c->message = $validatedData['message'];
@@ -50,6 +52,11 @@ class CommentController extends Controller
         $c->user_id = Auth::id();
         $c->uploadTime = new DateTime();
         $c->save();
+        if($validatedData['image_url'] != null) {
+            $i = new Image;
+            $i->url = $validatedData['image_url'];
+            $c->image()->save($i);
+        }
 
         session()->flash('message', 'Comment posted');
         return redirect()->route('posts.show',['id' => $validatedData['post_id']]);
