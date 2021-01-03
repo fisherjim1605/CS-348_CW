@@ -19,7 +19,7 @@
                 <div class="card-body">
                     <p><b><a href="{{ route('users.show', ['id' => $post->user->id]) }}">Posted by {{ $post->user->name }}</a></b></p>
                     @if($hasImage == true)
-                        <p><img src="{{ $post->image->url }}"></p>
+                        <p><img src="{{ $post->image->url }}" style="max-width:100%; max-height:100%"></p>
                     @endif
                     <p>{{ $post->info }}</p>
                     <p><i>Uploaded at {{ $post->uploadTime }}</i></p>

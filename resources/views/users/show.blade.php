@@ -20,9 +20,11 @@
         <div class="card">
             <div class="card-header">Posts by {{ $user->name }}</div>
             <div class="card-body">
-                @foreach($posts as $post)
+                @forelse($posts as $post)
                     <p><a href="{{ route('posts.show', ['id' => $post->id]) }}">{{ $post->title}}</a></p>
-                @endforeach
+                @empty
+                    <p>No posts found</p>
+                @endforelse
             </div>
         </div>
         <div class="card">
@@ -32,8 +34,9 @@
                         <div class="card">
                             <div class="card-header"><a href="{{ route('posts.show', ['id' => $comment->post->id]) }}">Commented on {{ $comment->post->id }}</a></div>
                             <div class="card-body">
-                                <p>{{ $comment->title}}</p>
-                                <p><i>Commented at {{$comment->uploadTime}}</i></p>
+                                <p><b>{{ $comment->title}}</b></p>
+                                <p>{{ $comment->message }}</p>
+                                <p><i>Commented at {{ $comment->uploadTime }}</i></p>
                             </div>
                         </div>
                     @empty
