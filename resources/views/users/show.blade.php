@@ -31,10 +31,9 @@
                     @forelse($comments as $comment)
                         <div class="card">
                             <div class="card-header"><a href="{{ route('posts.show', ['id' => $comment->post->id]) }}">Commented on {{ $comment->post->id }}</a></div>
-                                <div class="card-body">
-                                    <p>{{ $comment->title}}</p>
-                                    <p><i>Commented at {{$comment->uploadTime}}</i></p>
-                                </div>
+                            <div class="card-body">
+                                <p>{{ $comment->title}}</p>
+                                <p><i>Commented at {{$comment->uploadTime}}</i></p>
                             </div>
                         </div>
                     @empty

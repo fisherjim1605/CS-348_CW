@@ -65,7 +65,7 @@
                     <div class="container">
                         <div class="card">
                             <div class="card-header">
-                                <a href="{{ route('users.show', ['id' => $post->user->id]) }}">Commented by {{$comment->user->name}}</a>
+                                <a href="{{ route('users.show', ['id' => $comment->user->id]) }}">Commented by {{$comment->user->name}}</a>
                             </div>
                             <div class="card-body">
                                 <p>{{ $comment->message }}</p>
